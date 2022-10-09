@@ -78,42 +78,29 @@ void DrawBoutScreen()
 
   for (uint8_t i = 0; i < 8; ++i)
   {
-    uint8_t direction = 0;
-    if (pawn[i][1] > 15)
-      if (((selectedPawn != i) & (buttonClick == 0)) || (drawSelectedPawn == 1))
+    if (pawn[i][1] <= 15)
+      continue;
+
+    if (((selectedPawn != i) & (buttonClick == 0)) || (drawSelectedPawn == 1))
+    {
+      DrawSprite(pawn[i][0], pawnXPosition[i], pawnYPosition[i], i / 4, pawnDirection[i]);
+    }
+    else if (buttonClick == 1)
+    {
+        if(i == selectedPawn)
+        {
+          uint8_t boardY = (pawnYPosition[selectedPawn] / 16);
+          uint8_t boardX = ((pawnXPosition[selectedPawn] - 64) / 16);
+
+          if((boardY > 0) && (pawnBoardLocation[boardY - 1][boardX] == 8))
+            continue;
+            
+          if((boardY > 1) && (pawnBoardLocation[boardY - 1][boardX] < 8) && (pawnBoardLocation[boardY - 2][boardX] == 8))
+            continue;
+        }
+
         DrawSprite(pawn[i][0], pawnXPosition[i], pawnYPosition[i], i / 4, pawnDirection[i]);
-        else if (buttonClick == 1)
-          for (uint8_t direction = 0; direction < 4; ++direction)
-          {
-
-            switch (direction)
-            {
-              case 0: //UP
-                if(i == selectedPawn)
-                {
-                  uint8_t boardY = (pawnYPosition[selectedPawn] / 16);
-                  uint8_t boardX = ((pawnXPosition[selectedPawn] - 64) / 16);
-
-                  if((boardY > 0) && (pawnBoardLocation[boardY - 1][boardX] == 8))
-                    break;
-                    
-                  if((boardY > 1) && (pawnBoardLocation[boardY - 1][boardX] < 8) && (pawnBoardLocation[boardY - 2][boardX] == 8))
-                    break;
-                }
-
-                DrawSprite(pawn[i][0], pawnXPosition[i], pawnYPosition[i], i / 4, pawnDirection[i]);
-                break;
-              case 1: //RIGHT
-
-                break;
-              case 2: //DOWN
-
-                break;
-              case 3: //LEFT
-
-                break;         
-            }
-          }
+    }
   }
 
 
