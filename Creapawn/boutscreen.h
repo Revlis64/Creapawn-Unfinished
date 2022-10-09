@@ -70,10 +70,7 @@ void DrawBoutScreen()
 
 
   }
-  uint8_t frames;
-  if (buttonClick == 1) 
-   frames = 4;
-   else frames = 8;
+  uint8_t frames = (buttonClick == 1) ? 4 : 8;
   if (arduboy.everyXFrames(frames))
     if (drawSelectedPawn == 1)
       drawSelectedPawn = 0;
@@ -92,10 +89,20 @@ void DrawBoutScreen()
             switch (direction)
             {
               case 0: //UP
-                if ((pawnBoardLocation[(pawnYPosition[i] / 16) - 1][(pawnXPosition[i] - 64) / 16] < 8) & ((pawnBoardLocation[(pawnYPosition[i] / 16) - 2][(pawnXPosition[i] - 64) / 16] == 8) || (pawnYPosition[i] == 16)) & (pawnYPosition[i] > 0))
+                if(i == selectedPawn)
+                {
+                  uint8_t boardY = (pawnYPosition[selectedPawn] / 16);
+                  uint8_t boardX = ((pawnXPosition[selectedPawn] - 64) / 16);
+
+                  if((boardY > 0) && (pawnBoardLocation[boardY - 1][boardX] == 8))
+                    break;
+                    
+                  if((boardY > 1) && (pawnBoardLocation[boardY - 1][boardX] < 8) && (pawnBoardLocation[boardY - 2][boardX] == 8))
+                    break;
+                }
+
+                DrawSprite(pawn[i][0], pawnXPosition[i], pawnYPosition[i], i / 4, pawnDirection[i]);
                 break;
-                 else DrawSprite(pawn[i][0], pawnXPosition[i], pawnYPosition[i], i / 4, pawnDirection[i]);
-                break;        
               case 1: //RIGHT
 
                 break;

@@ -139,6 +139,9 @@ void PawnConstruct()
       pawnYPosition[i] = i * 16;
       pawnDirection[i] = right;
       pawnBoardLocation[i][0] = i;
+
+      if(i == 1)
+        pawnBoardLocation[i][0] = 8;
     } 
     else
     {
