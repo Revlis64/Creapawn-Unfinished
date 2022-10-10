@@ -70,10 +70,7 @@ void DrawBoutScreen()
 
 
   }
-  uint8_t frames;
-  if (buttonClick == 1) 
-   frames = 4;
-   else frames = 8;
+  uint8_t frames = (buttonClick == 1) ? 4 : 8;
   if (arduboy.everyXFrames(frames))
     if (drawSelectedPawn == 1)
       drawSelectedPawn = 0;
@@ -81,32 +78,29 @@ void DrawBoutScreen()
 
   for (uint8_t i = 0; i < 8; ++i)
   {
-    uint8_t direction = 0;
-    if (pawn[i][1] > 15)
-      if (((selectedPawn != i) & (buttonClick == 0)) || (drawSelectedPawn == 1))
+    if (pawn[i][1] <= 15)
+      continue;
+
+    if (((selectedPawn != i) & (buttonClick == 0)) || (drawSelectedPawn == 1))
+    {
+      DrawSprite(pawn[i][0], pawnXPosition[i], pawnYPosition[i], i / 4, pawnDirection[i]);
+    }
+    else if (buttonClick == 1)
+    {
+        if(i == selectedPawn)
+        {
+          uint8_t boardY = (pawnYPosition[selectedPawn] / 16);
+          uint8_t boardX = ((pawnXPosition[selectedPawn] - 64) / 16);
+
+          if((boardY > 0) && (pawnBoardLocation[boardY - 1][boardX] == 8))
+            continue;
+            
+          if((boardY > 1) && (pawnBoardLocation[boardY - 1][boardX] < 8) && (pawnBoardLocation[boardY - 2][boardX] == 8))
+            continue;
+        }
+
         DrawSprite(pawn[i][0], pawnXPosition[i], pawnYPosition[i], i / 4, pawnDirection[i]);
-        else if (buttonClick == 1)
-          for (uint8_t direction = 0; direction < 4; ++direction)
-          {
-
-            switch (direction)
-            {
-              case 0: //UP
-                if ((pawnBoardLocation[(pawnYPosition[i] / 16) - 1][(pawnXPosition[i] - 64) / 16] < 8) & ((pawnBoardLocation[(pawnYPosition[i] / 16) - 2][(pawnXPosition[i] - 64) / 16] == 8) || (pawnYPosition[i] == 16)) & (pawnYPosition[i] > 0))
-                break;
-                 else DrawSprite(pawn[i][0], pawnXPosition[i], pawnYPosition[i], i / 4, pawnDirection[i]);
-                break;        
-              case 1: //RIGHT
-
-                break;
-              case 2: //DOWN
-
-                break;
-              case 3: //LEFT
-
-                break;         
-            }
-          }
+    }
   }
 
 

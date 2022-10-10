@@ -134,19 +134,22 @@ void PawnConstruct()
     if (pawn[i][1] > 15)
       PawnStatConstruct( pawn[i][1], pawn[i][0], i);
     if (i < 4)
-        {
-          pawnXPosition[i] = 64;
-          pawnYPosition[i] = i * 16;
-          pawnDirection[i] = right;
-          pawnBoardLocation[pawnXPosition[i] / 16][0] = i;
-        } 
-        else
-        {
-          pawnXPosition[i] = 112;
-          pawnYPosition[i] = (i - 4) * 16;
-          pawnDirection[i] = left;
-          pawnBoardLocation[pawnXPosition[i] / 16][3] = i;
-        }
+    {
+      pawnXPosition[i] = 64;
+      pawnYPosition[i] = i * 16;
+      pawnDirection[i] = right;
+      pawnBoardLocation[i][0] = i;
+
+      if(i == 1)
+        pawnBoardLocation[i][0] = 8;
+    } 
+    else
+    {
+      pawnXPosition[i] = 112;
+      pawnYPosition[i] = (i - 4) * 16;
+      pawnDirection[i] = left;
+      pawnBoardLocation[i - 4][3] = i;
+    }
   }
   
 }
