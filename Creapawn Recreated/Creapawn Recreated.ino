@@ -104,7 +104,7 @@ void Game()
   switch (gameState) 
   {
     case GameState::PreboutSetup:
-      pawnByte[0][0] = random( 0, 256);
+      pawnByte[0][0] = ((random( 0, 32)) * 8) + (random(0, 8));
       pawnByte[0][1] = (random( 0, 225)) + 16;
       pawnByte[1][0] = random( 0, 256);
       pawnByte[1][1] = (random( 0, 225)) + 16;
@@ -113,7 +113,6 @@ void Game()
       pawnByte[3][0] = random( 0, 256);
       pawnByte[3][1] = (random( 0, 225)) + 16;
       PawnConstruct();
-      selectedPawn = 0;
       selectedPawn = 0;
       gameState = GameState::BoutScreen;
       break;

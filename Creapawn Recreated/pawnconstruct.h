@@ -73,10 +73,10 @@ void CreatePawnByte(uint8_t pawnNumber)
 
 void PawnStatConstruct(uint8_t pawnByteTwo, uint8_t pawnByteThree, uint8_t pawnNumber)
 {
-  for (pawnByteThree = 0; pawnByteThree > 15; pawnByteThree-=16)
+  for (pawnByteThree = pawnByteThree; pawnByteThree > 15; pawnByteThree -= 16)
     ++pawn[pawnNumber].zodiac;
     if (pawnNumber < 4)
-      for (pawnByteThree; pawnByteThree > 0; -- pawnByteThree)
+      for (pawnByteThree = pawnByteThree; pawnByteThree > 0; --pawnByteThree)
         ++pawn[pawnNumber].experience;
 
   pawn[pawnNumber].type = speciesStats[pawnByteTwo / 8][0];
